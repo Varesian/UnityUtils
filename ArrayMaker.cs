@@ -21,9 +21,9 @@ public class ArrayMaker : MonoBehaviour {
 	}
 	private Transform[,,] colliders;
 
-	private float elementXLen = 0;
-	private float elementYLen = 0;
-	private float elementZLen = 0;
+	//private float elementXLen = 0;
+	//private float elementYLen = 0;
+	//private float elementZLen = 0;
 
 	// Use this for initialization
 	public void Start () {
