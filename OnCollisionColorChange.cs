@@ -16,7 +16,7 @@ public class OnCollisionColorChange : MonoBehaviour {
 			colorFadeSecs = 0;
 			Debug.LogWarning("colorFadeSecs cannot be negative. Setting to 0.", this);
 		}
-		timeLeftForColorFade = colorFadeSecs;
+		timeLeftForColorFade = 0;
 	}
 	
 	void OnCollisionEnter() {
