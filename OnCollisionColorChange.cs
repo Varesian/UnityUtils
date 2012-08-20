@@ -14,7 +14,8 @@ public class OnCollisionColorChange : MonoBehaviour {
 	private int curCollidingColorIndex = 0;
 	private int nextCollidingColorIndex = 1;
 	private Color curCollidingColor;
-	private float collidingColorLerpAmount; //DEBUG
+	private float collidingColorLerpAmount;
+	private Color colorAtCollision;
 	
 	void Start() {
 		initialColor = transform.renderer.material.color;
@@ -29,6 +30,7 @@ public class OnCollisionColorChange : MonoBehaviour {
 	void OnCollisionEnter() {
 		isInCollision = true;
 		renderer.material.color = curCollidingColor;
+		colorAtCollision = curCollidingColor;
 		timeLeftForColorFade = colorFadeSecs;
 	}
 	
@@ -53,7 +55,7 @@ public class OnCollisionColorChange : MonoBehaviour {
 		
 		if (!isInCollision && timeLeftForColorFade > 0) {
 			timeLeftForColorFade -= Time.deltaTime;
-			renderer.material.color = Color.Lerp(curCollidingColor, collidingColors[curCollidingColorIndex],
+			renderer.material.color = Color.Lerp(initialColor, colorAtCollision,
 				timeLeftForColorFade / colorFadeSecs);
 		}
 		
