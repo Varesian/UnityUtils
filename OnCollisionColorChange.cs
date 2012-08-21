@@ -9,12 +9,12 @@ public class OnCollisionColorChange : MonoBehaviour {
 	
 	private Color initialColor;
 	private float timeLeftForColorFade;
-	private bool inCollision;
 	private bool isInCollision;
 	private int curCollidingColorIndex = 0;
 	private int nextCollidingColorIndex = 1;
 	private Color curCollidingColor;
-	private float collidingColorLerpAmount;
+	//0 to 1 (how much to blend nth and (n+1)th colors in array
+	private float collidingColorLerpAmount; 
 	private Color colorAtCollision;
 	
 	void Start() {
@@ -41,10 +41,21 @@ public class OnCollisionColorChange : MonoBehaviour {
 		}
 	}
 	
+	//modulo incrementer. So array indices stay within bounds when cycling through colors
+	int modIncrement(int i) {
+		return i % collidingColors.GetLength(0);
+	}
+	
 	void UpdateCurrentColliderColor() {
 		collidingColorLerpAmount += colorMorphSpeed * Time.deltaTime;		
 		curCollidingColor = Color.Lerp (collidingColors[curCollidingColorIndex], 
 			collidingColors[nextCollidingColorIndex], collidingColorLerpAmount);
+		
+		if (collidingColorLerpAmount > 1.0f) {
+			collidingColorLerpAmount = 0;
+			curCollidingColorIndex = modIncrement(curCollidingColorIndex + 1);
+			nextCollidingColorIndex = modIncrement(nextCollidingColorIndex + 1);
+		}
 	}
 	
 	void Update() {
