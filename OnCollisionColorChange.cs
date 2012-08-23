@@ -27,6 +27,14 @@ public class OnCollisionColorChange : MonoBehaviour {
 		curCollidingColor = collidingColors[0];
 	}
 	
+	public void Collide() {
+		OnCollisionEnter ();
+	}
+	
+	public void ColliderExit() {
+		OnCollisionExit ();
+	}
+	
 	void OnCollisionEnter() {
 		isInCollision = true;
 		renderer.material.color = curCollidingColor;
