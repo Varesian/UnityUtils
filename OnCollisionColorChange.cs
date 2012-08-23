@@ -27,11 +27,11 @@ public class OnCollisionColorChange : MonoBehaviour {
 		curCollidingColor = collidingColors[0];
 	}
 	
-	public void Collide() {
+	void OnPointCloudCollisionEnter() {
 		OnCollisionEnter ();
 	}
 	
-	public void ColliderExit() {
+	void OnPointCloudCollisionExit() {
 		OnCollisionExit ();
 	}
 	
