@@ -16,13 +16,14 @@ public class ArrayMaker : MonoBehaviour {
 	public int numZElements = 1;
 	public Vector3 paddingPercent = Vector3.zero;
 	
-	private float lowerLeft = 0.0f;  //shifted by code so center of array is center of transform
-	
 	public Transform[,,] Colliders {
 		get { return colliders; }
 	}
 	private Transform[,,] colliders;
 
+	//private float elementXLen = 0;
+	//private float elementYLen = 0;
+	//private float elementZLen = 0;
 
 	// Use this for initialization
 	public void Start () {
@@ -41,18 +42,6 @@ public class ArrayMaker : MonoBehaviour {
 			throw new System.Exception("paddingPercent must be between 0 and 100");
 		}
 		
-		//shift everything so the center is the center of the transform
-		float xOffsetForCentering = prefabObject.transform.localScale.x * 
-			numXElements * 0.5f * -1.0f +
-				prefabObject.transform.localScale.x / 2.0f;
-		float yOffsetForCentering = prefabObject.transform.localScale.y * 
-			numYElements * 0.5f * -1.0f +
-				prefabObject.transform.localScale.y / 2.0f;
-		float zOffsetForCentering = prefabObject.transform.localScale.z * 
-			numZElements * 0.5f * -1.0f +
-				prefabObject.transform.localScale.z / 2.0f;
-		
-		
 		//area given to each element of the array. Elements will not use all the area if
 		//padding is set
 		Vector3 elementLocalScale = new Vector3(prefabObject.transform.localScale.x * transform.localScale.x,
@@ -68,12 +57,11 @@ public class ArrayMaker : MonoBehaviour {
 		for (int xBoxNum=0; xBoxNum < numXElements; xBoxNum++) {
 			for (int yBoxNum=0; yBoxNum < numYElements; yBoxNum++) {
 				for (int zBoxNum=0; zBoxNum < numZElements; zBoxNum++) {
-					GameObject newElement = 
-						(GameObject) Instantiate(prefabObject,
-							new Vector3(transform.position.x + (float) xBoxNum * elementLen.x + xOffsetForCentering, 
-					                    transform.position.y + (float) yBoxNum * elementLen.y + yOffsetForCentering, 
-					                    transform.position.z + (float) zBoxNum * elementLen.z + zOffsetForCentering),
-					                    	Quaternion.identity);
+					GameObject newElement = (GameObject) Instantiate(prefabObject, 
+					                                    new Vector3(transform.position.x + (float) xBoxNum * elementLen.x, 
+					                                                transform.position.y + (float) yBoxNum * elementLen.y, 
+					                                                transform.position.z + (float) zBoxNum * elementLen.z),
+					                                    Quaternion.identity);
 					newElement.transform.localScale = elementLocalScale;
 					newElement.transform.parent = transform;
 					colliders[xBoxNum, yBoxNum, zBoxNum] = newElement.transform;
